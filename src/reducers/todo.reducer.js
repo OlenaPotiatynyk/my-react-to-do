@@ -1,8 +1,4 @@
-export const initialState = {
-    tasks: []
-};
-
-export const initializer = (initialValue = initialState.tasks) =>
+export const initializer = (initialValue = []) =>
     JSON.parse(localStorage.getItem("localTodos")) || initialValue;
 
 export const TodoReducer = (state, action) => {
@@ -13,7 +9,7 @@ export const TodoReducer = (state, action) => {
             const newTask = {
                 id: uniqId,
                 completed: false,
-                text: action.text,
+                text: action.text.replace(/\n|\r|\t/g, ""),
             };
             return [...state, newTask]
         }
@@ -22,7 +18,7 @@ export const TodoReducer = (state, action) => {
                 item.id === action.id
                     ? {
                         ...item,
-                        text: action.text
+                        text: action.text.replace(/\n|\r|\t/g, "")
                     }
                     : item
             )
@@ -30,7 +26,7 @@ export const TodoReducer = (state, action) => {
             return state.filter((item) =>
                 item.id !== action.id);
         case "toggle_checked":
-            return state.map((item) =>
+            return state.map(item =>
                 item.id === action.id
                     ? {
                         ...item,
@@ -38,6 +34,11 @@ export const TodoReducer = (state, action) => {
                     }
                     : item
             )
+        case "move_up":
+            return [
+                ...state.filter((item) => item.id === action.id),
+                ...state.filter((item) => item.id !== action.id)
+            ]
         default:
             return state;
     }

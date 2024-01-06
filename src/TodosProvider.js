@@ -7,7 +7,6 @@ export const TodosProvider = ({ children }) => {
     const [todos, dispatch] = useReducer(TodoReducer, [], initializer);
 
     useEffect(() => {
-        console.log("Todos updated, persisting to local storage", todos);
         localStorage.setItem("localTodos", JSON.stringify(todos));
     }, [todos]);
 

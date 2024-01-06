@@ -15,7 +15,6 @@ const AddNewTask = ({add}) => {
             <TextField
                 value={inputVal}
                 label="My outstanding task is..."
-                placeholder="Placeholder"
                 color="secondary"
                 multiline
                 onChange={e => setInputVal(e.target.value)}

@@ -1,8 +1,8 @@
 import React, {useState} from "react";
-import {Checkbox, IconButton, ListItem, TextField} from "@mui/material";
-import {Edit, DeleteForever, Close, Save, DragIndicator} from "@mui/icons-material";
+import {Checkbox, IconButton, ListItem, TextField, Tooltip} from "@mui/material";
+import {Edit, DeleteForever, Close, Save, KeyboardDoubleArrowUp} from "@mui/icons-material";
 
-const Task = ({task, remove, edit, toggle_checked}) => {
+const Task = ({task, remove, edit, toggle_checked, move_up}) => {
     const [isEditing, setIsEditing] = useState(false);
     const [text, setText] = useState(task.text);
     let taskContent;
@@ -17,8 +17,7 @@ const Task = ({task, remove, edit, toggle_checked}) => {
             <>
                 <TextField
                     value={text}
-                    label="Multiline Placeholder"
-                    placeholder="Placeholder"
+                    label="Edit"
                     multiline
                     rows={6}
                     color="secondary"
@@ -28,8 +27,16 @@ const Task = ({task, remove, edit, toggle_checked}) => {
                     }}
                     style={{width: '86%'}}
                 />
-                <IconButton color="secondary" onClick={handleSubmit}><Save/></IconButton>
-                <IconButton color="secondary" onClick={() => setIsEditing(false)}><Close/></IconButton>
+                <Tooltip title="Save">
+                    <IconButton color="secondary" onClick={handleSubmit}>
+                        <Save/>
+                    </IconButton>
+                </Tooltip>
+                <Tooltip title="Close">
+                    <IconButton color="secondary" onClick={() => setIsEditing(false)}>
+                        <Close/>
+                    </IconButton>
+                </Tooltip>
             </>
         );
     } else {
@@ -39,20 +46,33 @@ const Task = ({task, remove, edit, toggle_checked}) => {
                           onChange={toggle_checked}/>
                 <label htmlFor={task.id} style={{
                     textDecoration: task.completed ? 'line-through' : 'none',
-                    width: '80%'
+                    flexGrow: '1'
                 }}>{task.text}</label>
-                <IconButton color="secondary" onClick={remove}><DeleteForever/></IconButton>
-                <IconButton color="secondary" onClick={() => setIsEditing(true)}><Edit/></IconButton>
-                <IconButton color="defauld" onClick={() => console.log('Add DnD')}><DragIndicator/></IconButton>
+                <Tooltip title="Delete">
+                    <IconButton color="secondary" onClick={remove}>
+                        <DeleteForever/>
+                    </IconButton>
+                </Tooltip>
+                <Tooltip title="Edit">
+                    <IconButton color="secondary" onClick={() => setIsEditing(true)}>
+                        <Edit/>
+                    </IconButton>
+                </Tooltip>
+                <Tooltip title="Move to the top">
+                    <IconButton color="defauld" onClick={move_up}>
+                        <KeyboardDoubleArrowUp/>
+                    </IconButton>
+                </Tooltip>
             </>
         );
     }
 
     return (
-        <ListItem style={{
-            borderBottom: '1px solid lightgray',
-            minHeight: '70px'
-        }}>
+        <ListItem
+            style={{
+                borderBottom: '1px solid lightgray',
+                minHeight: '70px'
+            }}>
             {taskContent}
         </ListItem>
     );
