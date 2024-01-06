@@ -2,10 +2,12 @@ export const initialState = {
     tasks: []
 };
 
-export const reducer = (state, action) => {
+export const initializer = (initialValue = initialState.tasks) =>
+    JSON.parse(localStorage.getItem("localTodos")) || initialValue;
+
+export const TodoReducer = (state, action) => {
     switch (action.type) {
-        case "add":
-        {
+        case "add": {
             const randLetter = String.fromCharCode(65 + Math.floor(Math.random() * 26));
             const uniqId = randLetter + Date.now();
             const newTask = {
@@ -13,41 +15,29 @@ export const reducer = (state, action) => {
                 completed: false,
                 text: action.text,
             };
-            return {
-                tasks: [...state.tasks, newTask],
-            };
+            return [...state, newTask]
         }
         case "edit":
-        {
-            const idx = state.tasks.findIndex(t => t.id === action.id);
-            const todo = Object.assign({}, state.tasks[idx]);
-            todo.text = action.text;
-            const tasks = Object.assign([], state.tasks);
-            tasks.splice(idx, 1, todo);
-            return {
-                tasks: tasks,
-            };
-        }
+            return state.map((item) =>
+                item.id === action.id
+                    ? {
+                        ...item,
+                        text: action.text
+                    }
+                    : item
+            )
         case "remove":
-        {
-            const idx = state.tasks.findIndex(t => t.id === action.id);
-            const tasks = Object.assign([], state.tasks);
-            tasks.splice(idx, 1);
-            return {
-                tasks: tasks,
-            };
-        }
+            return state.filter((item) =>
+                item.id !== action.id);
         case "toggle_checked":
-        {
-            const idx = state.tasks.findIndex(t => t.id === action.id);
-            const todo = Object.assign({}, state.tasks[idx]);
-            todo.completed = !todo.completed;
-            const tasks = Object.assign([], state.tasks);
-            tasks.splice(idx, 1, todo);
-            return {
-                tasks: tasks,
-            };
-        }
+            return state.map((item) =>
+                item.id === action.id
+                    ? {
+                        ...item,
+                        completed: !item.completed
+                    }
+                    : item
+            )
         default:
             return state;
     }

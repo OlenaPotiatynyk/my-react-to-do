@@ -1,18 +1,18 @@
-import React, {useReducer} from "react";
-import {initialState, reducer} from "../reducers/todo.reducer.js";
+import React, {useContext} from "react";
 import Task from "./Task.js";
 import AddNewTask from "./AddNewTask.js";
 import {Container, List} from "@mui/material";
+import {TodoContext} from "../TodosProvider";
 
 const TaskList = () => {
-    const [state, dispatch] = useReducer(reducer, initialState);
+    const { todos, dispatch } = useContext(TodoContext);
     return (
         <Container maxWidth="sm" style={{minWidth: '420px'}}>
             <AddNewTask
                 add={text => dispatch({type: "add", text: text})}
             />
             <List>
-                {state.tasks.map(task => (
+                {todos.map(task => (
                     <Task
                         key={task.id}
                         task={task}

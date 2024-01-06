@@ -21,6 +21,7 @@ const Task = ({task, remove, edit, toggle_checked}) => {
                     placeholder="Placeholder"
                     multiline
                     rows={6}
+                    color="secondary"
                     onChange={e => setText(e.target.value)}
                     onKeyDown={(e) => {
                         if (e.key === "Enter") handleSubmit();
