@@ -1,4 +1,4 @@
-# Getting Started with My React To Do App
+# Getting Started with My Cozy To Do App
 
 This project was created for Kiowa Frontend Engineer Coding Challenge
 
