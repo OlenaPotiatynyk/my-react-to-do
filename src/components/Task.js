@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import {useState} from "react";
 import {Checkbox, IconButton, ListItem, TextField, Tooltip} from "@mui/material";
 import {Edit, DeleteForever, Close, Save, KeyboardDoubleArrowUp} from "@mui/icons-material";
 

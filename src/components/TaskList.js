@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import {useContext} from "react";
 import Task from "./Task.js";
 import AddNewTask from "./AddNewTask.js";
 import {Container, List} from "@mui/material";

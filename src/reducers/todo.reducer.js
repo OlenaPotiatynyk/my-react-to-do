@@ -9,7 +9,7 @@ export const TodoReducer = (state, action) => {
             const newTask = {
                 id: uniqId,
                 completed: false,
-                text: action.text.replace(/\n|\r|\t/g, ""),
+                text: action.text.replace(/[\n\s\r\t]*/g, ""),
             };
             return [...state, newTask]
         }
@@ -18,7 +18,7 @@ export const TodoReducer = (state, action) => {
                 item.id === action.id
                     ? {
                         ...item,
-                        text: action.text.replace(/\n|\r|\t/g, "")
+                        text: action.text.replace(/[\n\s\r\t]*/g, "")
                     }
                     : item
             )

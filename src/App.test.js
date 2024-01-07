@@ -1,8 +1,23 @@
-import { render, screen } from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import App from './App';
+import {TodosProvider} from "./TodosProvider";
+import TaskList from "./components/TaskList";
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+jest.mock('./components/TaskList');
+test('has task list component', () => {
+    render(
+        <TodosProvider>
+            <App/>
+        </TodosProvider>
+    );
+    expect(TaskList).toHaveBeenCalled();
+    expect(TaskList).toHaveBeenCalledTimes(1);
+});
+test('has correct heading', () => {
+    render(
+        <TodosProvider>
+            <App/>
+        </TodosProvider>
+    );
+    expect(screen.getByRole('heading')).toHaveTextContent('My Cozy To Do');
 });
